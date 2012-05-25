@@ -1749,6 +1749,21 @@ var requirejs, require, define;
         plugins: true,
         jQuery: true
     };
+    
+    /**
+     * Infers dependencies from aruments
+     */
+    amd = function(define, package, callback) {
+        var dependencies,
+            regex = /^function [^(]+\(([^)]+)\)/,
+            method = define === require ? define : require;
+        if(define !== method) {
+            dependencies = define.match(regex)[1].split(', ');
+        } else {
+            dependencies = package.match(regex)[1].split(', ');
+        }
+        return method(dependencies, package, callback);
+    };
 
     /**
      * Executes the text. Normally just uses eval, but can be modified

@@ -1755,12 +1755,12 @@ var requirejs, require, define;
      */
     amd = function(define, package, callback) {
         var dependencies,
-            regex = /^function [^(]+\(([^)]+)\)/,
+            regex = /^function [^(]*\(([^)]+)\)/,
             method = define === require ? define : require;
         if(define !== method) {
-            dependencies = define.match(regex)[1].split(', ');
+            dependencies = define.toString().match(regex)[1].split(', ');
         } else {
-            dependencies = package.match(regex)[1].split(', ');
+            dependencies = package.toString().match(regex)[1].split(', ');
         }
         return method(dependencies, package, callback);
     };
